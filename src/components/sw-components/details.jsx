@@ -1,5 +1,5 @@
 import React from "react";
-import { WithDetailsData, WithData } from "../hoc-helpers";
+import { WithDetailsData } from "../hoc-helpers";
 import SwapiSerwice from "../../services/swapi-service";
 import ItemDetails, { Record } from "../item-details/";
 
@@ -35,16 +35,15 @@ const StarshipsDetails = props => {
     </Deatails>
   );
 };
-const PlanetsDetails  = props => {
+const PlanetsDetails = props => {
   return (
-    <Deatails {...props} getData={getStarship} getImage={getStarshipImage}>
+    <Deatails {...props} getData={getPlanet} getImage={getPlanetImage}>
       <Record field="name" label="Name:" />
       <Record field="climate" label="Climate:" />
       <Record field="diameter" label="Diameter:" />
       <Record field="population" label="Population:" />
       <Record field="rotationPeriod" label="Rotation period:" />
       <Record field="terrain" label="Terrain:" />
-
     </Deatails>
   );
 };
