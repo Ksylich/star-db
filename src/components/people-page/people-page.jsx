@@ -1,23 +1,19 @@
 import React, { Component } from "react";
 
-import ErrorIndicator from "../error-indicator/";
 import ItemList from "../item-list/";
-import PersonDetails from "../person-details/";
+import ItemDetails, { Record } from "../item-details";
+import Row from "../row";
+import ErrorBoundry from "../error-boundry/";
 
-import SwapiSerwice from '../../services//swapi-service';
+
+import SwapiSerwice from "../../services//swapi-service";
 
 export default class PeoplePage extends Component {
-
   swapiSerwice = new SwapiSerwice();
 
   state = {
-    selectedPerson: null,
-    hasError: false
+    selectedPerson: null
   };
-
-  componentDidCatch() {
-    this.setState({ hasError: true });
-  }
 
   onItemSelected = id => {
     this.setState({
@@ -25,23 +21,45 @@ export default class PeoplePage extends Component {
     });
   };
 
+  renderDataList(arr) {
+    return arr.map(({ id, name }) => {
+      return (
+        <li className="list-group-item" key={id} id={id}>
+          {name}
+        </li>
+      );
+    });
+  }
+
+  renderItemRow = i => {
+    return `${i.name} (${i.gender}, ${i.birthYear})`;
+  };
+
   render() {
-
-    if(this.state.hasError){
-        return <ErrorIndicator/>;
-    }
-
-    return (
-      <div className="row mb2">
-        <div className="col-md-6">
-          <ItemList onItemSelected={this.onItemSelected} getData={this.swapiSerwice.getAllPeople}
-
-           />
-        </div>
-        <div className="col-md-6">
-          <PersonDetails personId={this.state.selectedPerson} />
-        </div>
-      </div>
+    const itemList = (
+      <ItemList
+        onItemSelected={this.onItemSelected}
+        getData={this.swapiSerwice.getAllPeople}
+      >
+        {this.renderItemRow}
+      </ItemList>
     );
+
+    // const { getPerson, getPersonImage } = this.swapiSerwice;
+
+    const personDetails = (
+      <ErrorBoundry>
+        
+        <ItemDetails
+          itemId={this.state.selectedPerson}
+        >
+          <Record field="birthYear" label="Birth Year:" />
+          <Record field="gender" label="Gender:" />
+          <Record field="eyeColor" label="Eye color:" />
+        </ItemDetails>
+      </ErrorBoundry>
+    );
+
+    return <Row left={itemList} right={personDetails} />;
   }
 }

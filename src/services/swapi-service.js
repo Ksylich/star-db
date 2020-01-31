@@ -2,6 +2,9 @@ import axios from "axios";
 
 export default class SwapiService {
   _apiBase = "https://swapi.co/api";
+  // _apiBase = "http://192.168.1.126:8000/api";
+
+  _imageBase = "https://starwars-visualguide.com/assets/img";
 
   async getResource(url) {
     try {
@@ -11,6 +14,18 @@ export default class SwapiService {
       throw new Error(`Could not fetch ${url}, received ${error}`);
     }
   }
+
+  getPersonImage = ({ id }) => {
+    return `${this._imageBase}/characters/${id}.jpg`;
+  };
+
+  getPlanetImage = ({ id }) => {
+    return `${this._imageBase}/planets/${id}.jpg`;
+  };
+
+  getStarshipImage = ({id}) => {
+    return `${this._imageBase}/starships/${id}.jpg`
+  };
 
   getAllPeople = async () => {
     const res = await this.getResource("/people/");
@@ -38,7 +53,7 @@ export default class SwapiService {
   };
 
   getStarship = async id => {
-    const starship = await this.getResource(`/starship/${id}/`);
+    const starship = await this.getResource(`/starships/${id}/`);
     return this._transformStarship(starship);
   };
 
@@ -47,7 +62,7 @@ export default class SwapiService {
     return item.url.match(idRegExp)[1];
   }
 
-  transformPlanet = (planet) => {
+  _transformPlanet = planet => {
     return {
       id: this._extractId(planet),
       name: planet.name,
@@ -57,7 +72,7 @@ export default class SwapiService {
     };
   };
 
-  _transformStarship = (starship) => {
+  _transformStarship = starship => {
     return {
       id: this._extractId(starship),
       name: starship.name,
@@ -67,17 +82,18 @@ export default class SwapiService {
       length: starship.length,
       crew: starship.crew,
       passengers: starship.passengers,
-      cargoCapacity: starship.cargo_capacity
-    }
+      cargoCapacity: starship.cargo_capacity,
+      hyperdriveRating: starship.hyperdrive_rating,
+    };
   };
 
-  _transformPerson = (person) => {
+  _transformPerson = person => {
     return {
       id: this._extractId(person),
       name: person.name,
       gender: person.gender,
       birthYear: person.birth_year,
       eyeColor: person.eye_color
-    }
-  }
+    };
+  };
 }

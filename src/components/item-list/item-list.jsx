@@ -1,52 +1,37 @@
-import React, { Component } from "react";
+import React, { useCallback } from "react";
 
-import Spinner from "../spinner/";
+import {WithData} from "../hoc-helpers/";
 import SwapiService from "../../services/swapi-service";
 
 import "./item-list.css";
 
-export default class ItemList extends Component {
-  swapiService = new SwapiService();
-  state = {
-    dataList: null
-  };
+const ItemList = ({ children, dataList, onItemSelected }) => {
+  const onItemClick = useCallback(
+    e => {
+      onItemSelected(e.target.id);
+    },
+    [onItemSelected]
+  );
 
-  componentDidMount() {
-
-    const {getData} = this.props;
-
-   getData().then(dataList => {
-      this.setState({
-        dataList
-      });
-    });
-  }
-
-  onItemClick = e => {
-    this.props.onItemSelected(e.target.id);
-  };
-
-  renderDataList(arr) {
-    return arr.map(({ id, name }) => {
+  const renderDataList = arr => {
+    return arr.map(item => {
+      const { id } = item;
+      const label = children(item);
       return (
         <li className="list-group-item" key={id} id={id}>
-          {name}
+          {label}
         </li>
       );
     });
-  }
+  };
 
-  render() {
-    const { dataList } = this.state;
+  return (
+    <ul className="item-list list-group" onClick={onItemClick}>
+      {renderDataList(dataList)}
+    </ul>
+  );
+};
 
-    if (!dataList) {
-      return <Spinner />;
-    }
+const { getAllPeople } = new SwapiService();
 
-    return (
-      <ul className="item-list list-group" onClick={this.onItemClick}>
-        {this.renderDataList(dataList)}
-      </ul>
-    );
-  }
-}
+export default WithData(ItemList, getAllPeople);

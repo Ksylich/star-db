@@ -6,7 +6,7 @@ const PlanetView = ({ planet }) => {
         <img
           className="planet-image"
           alt="random planet"
-          src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
+          src={`http://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
         />
         <div>
           <h4>{name}</h4>
