@@ -1,7 +1,5 @@
 import React, { useCallback } from "react";
 
-import {WithData} from "../hoc-helpers/";
-import SwapiService from "../../services/swapi-service";
 
 import "./item-list.css";
 
@@ -32,6 +30,5 @@ const ItemList = ({ children, dataList, onItemSelected }) => {
   );
 };
 
-const { getAllPeople } = new SwapiService();
 
-export default WithData(ItemList, getAllPeople);
+export default ItemList;

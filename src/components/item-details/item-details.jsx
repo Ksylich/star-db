@@ -35,6 +35,4 @@ const ItemDetails = ({ children, image, item }) => {
   );
 };
 
-const { getPerson, getPersonImage } = new SwapiService();
-
-export default WithDetailsData(ItemDetails,getPerson,getPersonImage);
+export default ItemDetails;

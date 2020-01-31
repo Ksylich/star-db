@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import Spinner from '../spinner/';
 import ErrorBoundry from '../error-boundry';
 
-const WithDetailsData = (View, getData, getImage) => {
+const WithDetailsData = (View) => {
 
   
     return class extends Component {
@@ -27,7 +27,7 @@ const WithDetailsData = (View, getData, getImage) => {
     
       updateItem() {
         this.setState({ loading: true });
-        const { itemId } = this.props;
+        const { itemId, getData, getImage } = this.props;
     
         if (!itemId) {
           return;

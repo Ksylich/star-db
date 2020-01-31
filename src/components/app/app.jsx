@@ -6,8 +6,9 @@ import ErrorIndicator from "../error-indicator/";
 import PeoplePage from "../people-page/";
 
 import Row from "../row/";
-import ItemDetails, {Record} from "../item-details";
+import ItemDetails, { Record } from "../item-details";
 import SwapiSerwice from "../../services/swapi-service";
+import { StarshipsDetails } from "../sw-components/";
 
 import "./app.css";
 
@@ -27,43 +28,12 @@ class App extends Component {
       return <ErrorIndicator />;
     }
 
-    const {
-      getPerson,
-      getStarship,
-      getPersonImage,
-      getStarshipImage
-    } = this.swapiSerwice;
-
-    const personDetails = (
-      <ItemDetails itemId={11} getData={getPerson} getImage={getPersonImage}>
-        <Record field="birthYear" label="Birth Year:" />
-        <Record field="gender" label="Gender:" />
-        <Record field="eyeColor" label="Eye color:" />
-
-      </ItemDetails>
-      
-    );
-    const starshipDetails = (
-      <ItemDetails
-        itemId={15}
-        getData={getStarship}
-        getImage={getStarshipImage}
-      >
-        <Record field="model" label="Model:" />
-        <Record field="costInCredits" label="Cost:" />
-        <Record field="crew" label="Crew:" />
-        <Record field="passengers" label="Passengers:" />
-        <Record field="hyperdriveRating" label="Hyperdrive Rating:" />
-
-      </ItemDetails>
-    );
-
     return (
       <div>
         <Header />
-        {/* <Row left={personDetails} right={starshipDetails} /> */}
         {/* <RandomPlanet /> */}
-        <PeoplePage/>
+        <PeoplePage />
+        <StarshipsDetails itemId={15}/>
       </div>
     );
   }
