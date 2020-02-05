@@ -4,11 +4,15 @@ import Header from "../header";
 import RandomPlanet from "../random-planet";
 import ErrorIndicator from "../error-indicator/";
 import PeoplePage from "../people-page/";
+import  SwapiServiceContext  from "../swapi-service-context";
 
-import Row from "../row/";
-import ItemDetails, { Record } from "../item-details";
 import SwapiSerwice from "../../services/swapi-service";
-import { StarshipsDetails } from "../sw-components/";
+import {
+  StarshipsDetails,
+  StarshipsList,
+  PlanetsDetails,
+  PlanetsList
+} from "../sw-components/";
 
 import "./app.css";
 
@@ -29,12 +33,19 @@ class App extends Component {
     }
 
     return (
-      <div>
-        <Header />
-        {/* <RandomPlanet /> */}
-        <PeoplePage />
-        <StarshipsDetails itemId={15}/>
-      </div>
+      <SwapiServiceContext.Provider value={this.swapiSerwice}>
+        <div>
+          <Header />
+          {/* <RandomPlanet /> */}
+          <PeoplePage />
+
+          {/* <StarshipsList onItemSelected={null}/> */}
+          <StarshipsDetails itemId={15} />
+
+          {/* <PlanetsList onItemSelected={null}/> */}
+          <PlanetsDetails itemId={15} />
+        </div>
+      </SwapiServiceContext.Provider>
     );
   }
 }

@@ -30,18 +30,11 @@ export default class PeoplePage extends Component {
     });
   }
 
-  renderItemRow = i => {
-    return `${i.name} (${i.gender}, ${i.birthYear})`;
-  };
-
   render() {
     const itemList = (
-      <PersonList onItemSelected={this.onItemSelected}>
-        {this.renderItemRow}
-      </PersonList>
+      <PersonList onItemSelected={this.onItemSelected}/>  
     );
 
-    // const { getPerson, getPersonImage } = this.swapiSerwice;
 
     const personDetails = (
       <ErrorBoundry>
