@@ -1,7 +1,5 @@
 import React from "react";
 
-import SwapiService from "../../services/swapi-service";
-import { WithDetailsData } from "../hoc-helpers";
 // import ErrorButton from '../error-button/';
 
 import "./item-details.css";

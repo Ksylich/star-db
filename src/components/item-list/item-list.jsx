@@ -6,6 +6,7 @@ import "./item-list.css";
 const ItemList = ({ children, dataList, onItemSelected }) => {
   const onItemClick = useCallback(
     e => {
+      console.log('target', e.target.id);
       onItemSelected(e.target.id);
     },
     [onItemSelected]

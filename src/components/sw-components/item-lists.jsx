@@ -5,43 +5,40 @@ import ItemList from "../item-list";
 
 const { getAllPeople, getAllStarships, getAllPlanets } = new SwapiSerwice();
 
-const WithChildFunction = (Wrapped, fn) => {
+const WithChildFunction = fn => Wrapped => {
   return props => {
     return <Wrapped {...props}>{fn}</Wrapped>;
   };
 };
 
-const PersonItem = ({ name, birthYear }) => (
-  <span>
+const PersonItem = ({ name, birthYear, id }) => (
+  <span id={id}>
     {name} ({birthYear})
   </span>
 );
 
-const StarshipItem = ({ name, model }) => (
-  <span>
+const StarshipItem = ({ name, model, id }) => (
+  <span id={id}>
     {name} ({model})
   </span>
 );
 
-const PlanetItem = ({ name, rotationPeriod }) => (
-  <span>
+const PlanetItem = ({ name, rotationPeriod, id }) => (
+  <span id={id}>
     {name} ({rotationPeriod})
   </span>
 );
 
-const PersonList = WithChildFunction(
-  WithData(ItemList, getAllPeople),
-  PersonItem
+const PersonList = WithChildFunction(PersonItem)(
+  WithData(ItemList, getAllPeople)
 );
 
-const StarshipsList = WithChildFunction(
-  WithData(ItemList, getAllStarships),
-  StarshipItem
+const StarshipsList = WithChildFunction(StarshipItem)(
+  WithData(ItemList, getAllStarships)
 );
 
-const PlanetsList = WithChildFunction(
-  WithData(ItemList, getAllPlanets),
-  PlanetItem
+const PlanetsList = WithChildFunction(PlanetItem)(
+  WithData(ItemList, getAllPlanets)
 );
 
 export { PersonList, StarshipsList, PlanetsList };
